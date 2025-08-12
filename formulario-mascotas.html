@@ -1,26 +1,65 @@
-<script>
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  mensajeDiv.textContent = "Enviando...";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulario Mascotas</title>
+</head>
+<body>
 
-  const formData = new FormData(form);
+  <h1>Formulario para subir datos de tu mascota</h1>
 
-  fetch(url, {
-    method: 'POST',
-    body: formData,
-  })
-  .then(response => response.json())
-  .then(res => {
-    if(res.status === 'success'){
-      mensajeDiv.textContent = "Datos enviados correctamente.";
-      form.reset();
-    } else {
-      mensajeDiv.textContent = "Error: " + res.message;
-    }
-  })
-  .catch(err => {
-    mensajeDiv.textContent = "Error al enviar datos.";
-    console.error(err);
-  });
-});
-</script>
+  <form id="formMascota">
+    <label>Nombre de la mascota:<br>
+      <input type="text" name="Nombre" required>
+    </label><br><br>
+
+    <label>Descripción:<br>
+      <textarea name="Descripción" required></textarea>
+    </label><br><br>
+
+    <label>Contacto:<br>
+      <input type="text" name="Contacto" required>
+    </label><br><br>
+
+    <label>Foto:<br>
+      <input type="file" name="foto" accept="image/*" required>
+    </label><br><br>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="mensaje" style="margin-top: 20px; font-weight: bold;"></div>
+
+  <script>
+    const form = document.getElementById('formMascota');
+    const mensajeDiv = document.getElementById('mensaje');
+    const url = 'https://script.google.com/macros/s/AKfycbwz_TM-H1v_hAc8ruJ0btR40DUxDQ29v3VMItRBLkCzsiEzXGRHz4sAKHat_exrhyMbAA/exec';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      mensajeDiv.textContent = "Enviando...";
+
+      const formData = new FormData(form);
+
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(res => {
+        if(res.status === 'success'){
+          mensajeDiv.textContent = "Datos enviados correctamente.";
+          form.reset();
+        } else {
+          mensajeDiv.textContent = "Error: " + res.message;
+        }
+      })
+      .catch(err => {
+        mensajeDiv.textContent = "Error al enviar datos.";
+        console.error(err);
+      });
+    });
+  </script>
+
+</body>
+</html>
